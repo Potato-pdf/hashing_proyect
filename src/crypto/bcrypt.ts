@@ -5,23 +5,24 @@ import bcrypt from 'bcryptjs';
  * Provides secure password hashing using bcrypt
  */
 
-const DEFAULT_SALT_ROUNDS = 10;
-
 /**
  * Hashes a password using bcrypt
  * @param password - The password to hash
- * @param saltRounds - Number of salt rounds (default: 10)
  * @returns Promise resolving to the hash string
  */
 export async function hashPassword(
     password: string,
-    saltRounds: number = DEFAULT_SALT_ROUNDS
 ): Promise<string> {
     try {
-        const hash = await bcrypt.hash(password, saltRounds);
+        // Bun provides native Argon2 hashing
+        const hash = await Bun.password.hash(password, {
+            algorithm: "bcrypt",
+            cost: 4,
+        });
+
         return hash;
     } catch (error) {
-        throw new Error(`Bcrypt hashing failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        throw new Error(`Argon2 hashing failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
 }
 
@@ -33,7 +34,7 @@ export async function hashPassword(
  */
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
     try {
-        return await bcrypt.compare(password, hash);
+        return await Bun.password.verify(password, hash);
     } catch (error) {
         return false;
     }
