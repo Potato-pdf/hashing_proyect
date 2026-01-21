@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Demostración profesional de operaciones criptográficas: cifrado simétrico, asimétrico y hashing de contraseñas">
+    <title>Cryptography Demo - Engineering Blueprint</title>
+    <link rel="stylesheet" href="/src/styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="blueprint-container">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="header-title">Cryptography Laboratory</h1>
+                <p class="header-subtitle">Engineering-Grade Encryption & Hashing Demonstrations</p>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-navigation">
+            <button class="tab-btn active" data-tab="symmetric">
+                <span class="tab-icon">🔐</span>
+                <span class="tab-label">Symmetric</span>
+            </button>
+            <button class="tab-btn" data-tab="asymmetric">
+                <span class="tab-icon">🔑</span>
+                <span class="tab-label">Asymmetric</span>
+            </button>
+            <button class="tab-btn" data-tab="hashing">
+                <span class="tab-icon">🔨</span>
+                <span class="tab-label">Hashing</span>
+            </button>
+            <button class="tab-btn" data-tab="custom">
+                <span class="tab-icon">⚙️</span>
+                <span class="tab-label">Custom</span>
+            </button>
+        </nav>
+
+        <!-- Tab Content Container -->
+        <main class="tab-content-container">
+
+            <!-- Symmetric Encryption Tab -->
+            <div class="tab-content active" id="tab-symmetric">
+                <div class="bento-grid">
+
+                    <div class="bento-card span-2">
+                        <div class="card-header">
+                            <h2 class="card-title">AES-256 Symmetric Encryption</h2>
+                            <p class="card-description">Encrypt and decrypt using a shared secret key</p>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="input-group">
+                                <label for="symmetric-input" class="input-label">Plaintext Message</label>
+                                <textarea id="symmetric-input" class="input-field"
+                                    placeholder="Enter your message here..." rows="4"></textarea>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="symmetric-key" class="input-label">Encryption Key</label>
+                                <div class="key-input-wrapper">
+                                    <input id="symmetric-key" type="text" class="input-field mono"
+                                        placeholder="Auto-generated if empty">
+                                    <button id="generate-symmetric-key" class="btn-secondary">Generate</button>
+                                </div>
+                            </div>
+
+                            <div class="button-group">
+                                <button id="symmetric-encrypt" class="btn-primary">
+                                    Encrypt →
+                                </button>
+                                <button id="symmetric-decrypt" class="btn-primary">
+                                    ← Decrypt
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Output</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="output-field" id="symmetric-output">
+                                <span class="output-placeholder">Encrypted result will appear here...</span>
+                            </div>
+                            <button id="copy-symmetric" class="btn-copy" style="display: none;">Copy</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Asymmetric Encryption Tab -->
+            <div class="tab-content" id="tab-asymmetric">
+                <div class="bento-grid">
+
+                    <div class="bento-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Key Pair Generation</h3>
+                            <p class="card-description">NaCl Curve25519</p>
+                        </div>
+                        <div class="card-body">
+                            <button id="generate-keypair" class="btn-primary full-width">Generate Key Pair</button>
+
+                            <div class="key-display" id="keypair-display" style="display: none;">
+                                <div class="key-item">
+                                    <label class="key-label">Public Key</label>
+                                    <div id="public-key" class="key-value"></div>
+                                </div>
+                                <div class="key-item">
+                                    <label class="key-label">Private Key</label>
+                                    <div id="private-key" class="key-value"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card span-2">
+                        <div class="card-header">
+                            <h2 class="card-title">Public-Key Cryptography</h2>
+                            <p class="card-description">Encrypt with public key, decrypt with private key</p>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="input-group">
+                                <label for="asymmetric-input" class="input-label">Message</label>
+                                <textarea id="asymmetric-input" class="input-field"
+                                    placeholder="Enter your secret message..." rows="4"></textarea>
+                            </div>
+
+                            <div class="button-group">
+                                <button id="asymmetric-encrypt" class="btn-primary">Encrypt →</button>
+                                <button id="asymmetric-decrypt" class="btn-primary">← Decrypt</button>
+                            </div>
+
+                            <div class="output-field" id="asymmetric-output">
+                                <span class="output-placeholder">Encrypted result will appear here...</span>
+                            </div>
+                            <button id="copy-asymmetric" class="btn-copy" style="display: none;">Copy</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Password Hashing Tab -->
+            <div class="tab-content" id="tab-hashing">
+                <div class="bento-grid">
+
+                    <div class="bento-card span-2">
+                        <div class="card-header">
+                            <h2 class="card-title">Password Hashing</h2>
+                            <p class="card-description">One-way cryptographic hashing for secure password storage</p>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="input-group">
+                                <label for="hash-input" class="input-label">Password</label>
+                                <input id="hash-input" type="password" class="input-field"
+                                    placeholder="Enter password to hash...">
+                            </div>
+
+                            <div class="input-group">
+                                <label class="input-label">Algorithm Selection</label>
+                                <div class="algorithm-selector">
+                                    <button class="algorithm-btn active" data-algorithm="argon2">
+                                        <span class="algorithm-badge argon2">Argon2</span>
+                                        <span class="algorithm-desc">Most Secure</span>
+                                    </button>
+                                    <button class="algorithm-btn" data-algorithm="bcrypt">
+                                        <span class="algorithm-badge bcrypt">Bcrypt</span>
+                                        <span class="algorithm-desc">Industry Standard</span>
+                                    </button>
+                                    <button class="algorithm-btn" data-algorithm="sha256">
+                                        <span class="algorithm-badge sha256">SHA-256</span>
+                                        <span class="algorithm-desc">Fast Hashing</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="button-group">
+                                <button id="hash-password" class="btn-primary">Hash Password</button>
+                                <button id="clear-history" class="btn-secondary">Clear History</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Hash History</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="history-list" class="history-list">
+                                <div class="history-empty">No hashes yet</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Custom Hashing Tab -->
+            <div class="tab-content" id="tab-custom">
+                <div class="bento-grid">
+
+                    <div class="bento-card span-full">
+                        <div class="card-header">
+                            <h2 class="card-title">Custom Hashing Mechanism</h2>
+                            <p class="card-description">Personalized algorithm configuration (UI demonstration)</p>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="custom-grid">
+                                <div class="input-group">
+                                    <label for="custom-input" class="input-label">Input Data</label>
+                                    <textarea id="custom-input" class="input-field" placeholder="Enter data to hash..."
+                                        rows="4"></textarea>
+                                </div>
+
+                                <div class="param-group">
+                                    <div class="input-group">
+                                        <label for="custom-iterations" class="input-label">Iterations</label>
+                                        <input id="custom-iterations" type="number" class="input-field mono"
+                                            placeholder="1000" value="1000">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="custom-salt" class="input-label">Salt (Optional)</label>
+                                        <input id="custom-salt" type="text" class="input-field mono"
+                                            placeholder="Custom salt value">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="button-group">
+                                <button id="custom-hash" class="btn-primary" disabled>Hash with Custom
+                                    Algorithm</button>
+                                <button id="custom-verify" class="btn-secondary" disabled>Verify Hash</button>
+                            </div>
+
+                            <div class="output-field" id="custom-output">
+                                <span class="output-placeholder">Custom hash will appear here (functionality coming
+                                    soon)...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
