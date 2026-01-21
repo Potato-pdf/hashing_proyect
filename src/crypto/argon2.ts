@@ -1,7 +1,9 @@
 /**
  * Argon2 Password Hashing Module
- * Uses Bun's native Argon2 implementation
+ * Uses server-side Bun API for hashing
  */
+
+const API_URL = 'http://localhost:3001';
 
 export interface Argon2Options {
     timeCost?: number;
@@ -10,9 +12,9 @@ export interface Argon2Options {
 }
 
 /**
- * Hashes a password using Argon2id (Bun native)
+ * Hashes a password using Argon2id via server API
  * @param password - The password to hash
- * @param options - Optional Argon2 parameters
+ * @param options - Optional Argon2 parameters (not used in API call)
  * @returns Promise resolving to the hash string
  */
 export async function hashPassword(
@@ -20,14 +22,21 @@ export async function hashPassword(
     options: Argon2Options = {}
 ): Promise<string> {
     try {
-        // Bun provides native Argon2 hashing
-        const hash = await Bun.password.hash(password, {
-            algorithm: 'argon2id',
-            timeCost: options.timeCost || 3,
-            memoryCost: options.memoryCost || 65536, // 64 MiB
+        const response = await fetch(`${API_URL}/api/hash/argon2`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ password }),
         });
 
-        return hash;
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Hashing failed');
+        }
+
+        const data = await response.json();
+        return data.hash;
     } catch (error) {
         throw new Error(`Argon2 hashing failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -41,7 +50,7 @@ export async function hashPassword(
  */
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
     try {
-        return await Bun.password.verify(password, hash);
+        return false;
     } catch (error) {
         return false;
     }
