@@ -210,48 +210,52 @@
                 </div>
             </div>
 
-            <!-- Custom Hashing Tab -->
+            <!-- Custom Symmetric Encryption Tab -->
             <div class="tab-content" id="tab-custom">
                 <div class="bento-grid">
 
                     <div class="bento-card span-full">
                         <div class="card-header">
-                            <h2 class="card-title">Custom Hashing Mechanism</h2>
-                            <p class="card-description">Personalized algorithm configuration (UI demonstration)</p>
+                            <h2 class="card-title">CAHC - Custom Symmetric Encryption</h2>
+                            <p class="card-description">ChaCha-AES Hybrid Cipher with multi-layer security</p>
                         </div>
 
                         <div class="card-body">
                             <div class="custom-grid">
                                 <div class="input-group">
-                                    <label for="custom-input" class="input-label">Input Data</label>
-                                    <textarea id="custom-input" class="input-field" placeholder="Enter data to hash..."
+                                    <label for="custom-input" class="input-label">Message / Ciphertext</label>
+                                    <textarea id="custom-input" class="input-field"
+                                        placeholder="Enter message to encrypt or ciphertext to decrypt..."
                                         rows="4"></textarea>
                                 </div>
 
                                 <div class="param-group">
                                     <div class="input-group">
-                                        <label for="custom-iterations" class="input-label">Iterations</label>
-                                        <input id="custom-iterations" type="number" class="input-field mono"
-                                            placeholder="1000" value="1000">
+                                        <label for="custom-key" class="input-label">Encryption Key</label>
+                                        <div class="key-input-wrapper">
+                                            <input id="custom-key" type="text" class="input-field mono"
+                                                placeholder="Auto-generated if empty">
+                                            <button id="generate-custom-key" class="btn-secondary">Generate</button>
+                                        </div>
                                     </div>
                                     <div class="input-group">
-                                        <label for="custom-salt" class="input-label">Salt (Optional)</label>
-                                        <input id="custom-salt" type="text" class="input-field mono"
-                                            placeholder="Custom salt value">
+                                        <label for="custom-iterations" class="input-label">Iterations
+                                            (1000-100000)</label>
+                                        <input id="custom-iterations" type="number" class="input-field mono"
+                                            placeholder="10000" value="10000" min="1000" max="100000">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="button-group">
-                                <button id="custom-hash" class="btn-primary" disabled>Hash with Custom
-                                    Algorithm</button>
-                                <button id="custom-verify" class="btn-secondary" disabled>Verify Hash</button>
+                                <button id="custom-encrypt" class="btn-primary">Encrypt with Custom Algorithm</button>
+                                <button id="custom-decrypt" class="btn-primary">Decrypt</button>
                             </div>
 
                             <div class="output-field" id="custom-output">
-                                <span class="output-placeholder">Custom hash will appear here (functionality coming
-                                    soon)...</span>
+                                <span class="output-placeholder">Encrypted result will appear here...</span>
                             </div>
+                            <button id="copy-custom" class="btn-copy" style="display: none;">Copy</button>
                         </div>
                     </div>
 

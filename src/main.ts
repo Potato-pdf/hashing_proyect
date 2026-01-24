@@ -6,7 +6,7 @@
 import { initSymmetricSection } from './components/SymmetricSection';
 import { initAsymmetricSection } from './components/AsymmetricSection';
 import { initHashingSection } from './components/HashingSection';
-import { initCustomHashSection } from './components/CustomHashSection';
+import { initCustomSymmetricSection } from './components/CustomSymmetricSection';
 
 // Tab Navigation Logic
 function initTabNavigation(): void {
@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
         initHashingSection();
         console.log('✓ Password hashing section initialized');
 
-        initCustomHashSection();
-        console.log('✓ Custom hashing section initialized');
+        initCustomSymmetricSection();
+        console.log('✓ Custom symmetric encryption section initialized');
 
         console.log('🎉 Application ready!');
     } catch (error) {
